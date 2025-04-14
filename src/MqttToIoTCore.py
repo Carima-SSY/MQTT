@@ -71,25 +71,34 @@ class AWSIoTClient:
         request = message["request"]
         
         if request == "file-transfer":
-            file = message["file"]
+            data = message["data"]
             
-            filetype = file["type"] # 'data' or 'recipe'
-            filename = file["name"]
-            filecontent = base64.b64decode(file["content"])
+            datatype = data["type"] # 'data' or 'recipe'
+            dataname = data["name"]
+            #datacontent = base64.b64decode(file["content"])
+            datacontent = data["content"]
             
-            file_path = ""
-            if filetype == "data":
-                os.makedirs(self.device_dir, exist_ok=True)
-                file_path = os.path.join(self.device_dir, filename)
-            elif filetype == "recipe":
-                os.makedirs(self.recipe_dir, exist_ok=True)
-                file_path = os.path.join(self.recipe_dir, filename)
-            else:
-                print("Invalid File Type")
-                return 
+            with open(self.request_file, 'r', encoding='utf-8') as file:
+                requestlist_dic = json.load(file)
+                
+            requestlist_dic["request-list"].append({"type": "file-transfer", "data": {"type": datatype, "name": dataname, "content": datacontent}})
             
-            with open(file_path, "wb") as file:
-                file.write(filecontent)
+            with open(self.request_file, 'w', encoding='utf-8') as file:
+                json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
+                
+            # file_path = ""
+            # if datatype == "data":
+            #     os.makedirs(self.device_dir, exist_ok=True)
+            #     file_path = os.path.join(self.device_dir, dataname)
+            # elif datatype == "recipe":
+            #     os.makedirs(self.recipe_dir, exist_ok=True)
+            #     file_path = os.path.join(self.recipe_dir, dataname)
+            # else:
+            #     print("Invalid File Type")
+            #     return 
+            
+            # with open(file_path, "wb") as file:
+            #     file.write(datacontent)
                 
         elif request == "allow-remote-control":
             with open(self.request_file, 'r', encoding='utf-8') as file:
@@ -101,22 +110,19 @@ class AWSIoTClient:
                 json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
                 
         elif request == "print-start":
-            printing = message["printing"]
+            data = message["data"]
             
-            user_id = message["userId"]
-            
-            printing_data = printing["data"]
-            printing_recipe = printing["recipe"]
+            pdata = data["data"]
+            pecipe = data["recipe"]
             
             with open(self.request_file, 'r', encoding='utf-8') as file:
                 requestlist_dic = json.load(file)
                 
-            requestlist_dic["request-list"].append({"type": "print-start", "userId": user_id, "data": printing_data, "recipe": printing_recipe})
+            requestlist_dic["request-list"].append({"type": "print-start", "data": pdata, "recipe": pecipe})
             
             with open(self.request_file, 'w', encoding='utf-8') as file:
                 json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
-                
-            print("Request to PrintStart!!!!!")
+
             
     def connect(self):
         # Connect AWS IoT Core
