@@ -1,0 +1,14 @@
+{   
+    "request-list":[
+        {
+            "type": "allow-remote-control"
+        },
+        {
+            "type": "print-start",
+            "printing":{
+                "data": "sample.slice",
+                "recipe": "samplerecipe.xml"
+            }
+        }
+    ]
+}

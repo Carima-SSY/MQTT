@@ -1,0 +1,17 @@
+{
+    "sampledata1.slice":{
+        "preview": {
+            "name": "Preview_T.png",
+            "content": "j14y35jf3j1231gb2df1Gs5gh1454h6er435de14g35145145g14s25g14df54g154dg5df212bdf1z31fzhn25fg1zn2gfz1n2f1cx21z2"
+        },
+        "slice-img":{
+            "res_x": 4240,
+            "res_y": 3840,
+            "thick": 0.1,
+            "count": 136
+        },
+        "file":{
+            "size": 4512120
+        }
+    }
+}

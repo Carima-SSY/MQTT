@@ -1,0 +1,8 @@
+{
+    "alarm-list":[
+        {
+            "subject": "Printing Start",
+            "content": "Printing Request was Denied"
+        }
+    ]
+}

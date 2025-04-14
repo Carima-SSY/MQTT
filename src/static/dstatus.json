@@ -1,0 +1,16 @@
+{
+    "allow-remote-control": 1,
+    "status": "IDLE", 
+    "selected":{
+        "data":"sampletest.slice",
+        "recipe": "testrecipe.xml"
+    },
+    "printing":{
+        "data": "sampletest.slice",
+        "recipe": "testrecipe.xml",
+        "current-layer": 1,
+        "total-layer": 166,
+        "remaining-time": 4654,
+        "printing-progress": 12
+    }
+}
