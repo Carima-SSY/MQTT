@@ -52,7 +52,7 @@ def init_storage(mqtt_client, device_type, device_id, device_auth, sensor_status
 if __name__ == "__main__":
     config_content = get_config_info()
     
-    END_POINT = config_content["IoTCore"]["end_point"]
+    IOT_END_POINT = config_content["IoTCore"]["end_point"]
     CLIENT_ID = config_content["IoTCore"]["client_id"]
         
     CA_CERT = config_content["IoTCore"]["ca_cert"]
@@ -71,7 +71,9 @@ if __name__ == "__main__":
     
     APP_VERSION = config_content["App-Version"]
     
-    mqtt_client = MqttToIoTCore.AWSIoTClient(END_POINT, CLIENT_ID, TOPIC, CA_CERT, CERT_FILE, PRIVATE_KEY, DATA_DIR, RECIPE_DIR, REQUEST_FILE)
+    APIG_END_POINT = config_content["APIGateway"]["end_point"]
+    
+    mqtt_client = MqttToIoTCore.AWSIoTClient(IOT_END_POINT, CLIENT_ID, TOPIC, CA_CERT, CERT_FILE, PRIVATE_KEY, DATA_DIR, RECIPE_DIR, REQUEST_FILE,APIG_END_POINT)
     
     mqtt_client.connect()
     
@@ -103,7 +105,9 @@ if __name__ == "__main__":
                 
             if print_data != get_print_data():
                 print_data = get_print_data()
-                mqtt_client.publish({"target": "storage","action": "print-data","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": print_data}})
+                url = mqtt_client.get_presigned_url(method="put_object", key=DEV_TYPE+"/"+DEV_ID+"/pdata.json")
+                mqtt_client.put_file_to_presigned_url(presigned_url=url, json_data=print_data)
+                #mqtt_client.publish({"target": "storage","action": "print-data","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": print_data}})
             
             if print_recipe != get_print_recipe():
                 print_recipe = get_print_recipe()

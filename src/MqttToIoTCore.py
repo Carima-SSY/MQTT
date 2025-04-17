@@ -4,10 +4,11 @@ import time
 import json
 import os
 import base64
+import requests
 
 class AWSIoTClient:
 
-    def __init__(self, endpoint, client_id, topic, ca_cert, cert_file, private_key, device_dir, recipe_dir, request_file):
+    def __init__(self, iot_endpoint, client_id, topic, ca_cert, cert_file, private_key, device_dir, recipe_dir, request_file, api_endpoint):
         """
         AWS IoT Core MQTT 클라이언트 초기화
         :param endpoint: AWS IoT Core Endpoint
@@ -19,7 +20,7 @@ class AWSIoTClient:
         """
         print("Create MQTT Client...")
         
-        self.endpoint = endpoint
+        self.iot_endpoint = iot_endpoint
         self.client_id = client_id
         self.topic = topic
         self.ca_cert = ca_cert
@@ -28,8 +29,9 @@ class AWSIoTClient:
         self.device_dir = device_dir
         self.recipe_dir = recipe_dir
         self.request_file = request_file
+        self.api_endpoint = api_endpoint
         
-        print("Endpoint: ", self.endpoint)
+        print("IoT Core Endpoint: ", self.iot_endpoint)
         print("Client ID: ", self.client_id)
         print("Topic: ", self.topic)
         print("CA Cert: ", self.ca_cert)
@@ -38,6 +40,8 @@ class AWSIoTClient:
         print("Device Data Directory: ", self.device_dir)
         print("Device Recipe Directory: ", self.recipe_dir)
         print("Device Request File: ", self.request_file)
+        print("API Gateway Endpoint: ", self.api_endpoint)
+        
         self.client = mqtt.Client(client_id=self.client_id)
         print("Create MQTT Client Successfully!!")
         
@@ -55,14 +59,49 @@ class AWSIoTClient:
     def on_connect(self, client, userdata, flags, rc):
         # Call when connected to AWS IoT Core
         if rc == 0:
-            print("Connection to ", self.endpoint,"/", self.topic, ": Success")
+            print("Connection to ", self.iot_endpoint,"/", self.topic, ": Success")
             self.client.subscribe(self.topic)
         else:
-            print("Connection to ", self.endpoint,"/", self.topic, f": Failure (RC: {rc})")
+            print("Connection to ", self.iot_endpoint,"/", self.topic, f": Failure (RC: {rc})")
 
+    def get_presigned_url(self, method, key):
+        # key example = 'X1/1/files/test.slice'
+        
+        key_ls = ((str)(key)).split('/')
+        
+        devtype = key_ls[0]; devid = key_ls[1]
+        if len(key_ls) > 3: data_name = key_ls[2]+"/"+key_ls[3]
+        else: data_name = key_ls[2]
+        
+        response = requests.post(self.api_endpoint, 
+            json={
+                "action": "get_presigned_url", 
+                "device":{
+                    "type": devtype, 
+                    "id": devid
+                }, 
+                "data":{
+                    "name": data_name, 
+                    "method": method
+                }
+            }
+        )
+        if response.status_code == 200: return response.json()
+        else: return None
+        
+    def get_file_from_presigned_url(self, presigned_url):
+        response = requests.get(presigned_url)
+        if response.status_code == 200: return response.json()
+        else: return None
+        
+    def put_file_to_presigned_url(self, presigned_url, json_data):
+        response = requests.put(url=presigned_url,json=json_data)
+        if response.status_code == 200: return True
+        else: return False
+        
     def on_message(self, client, userdata, msg):
         # Call when receiving MQTT message
-        print("Message from ", self.endpoint, f": {msg.topic} -> {msg.payload.decode()}")
+        print("Message from ", self.iot_endpoint, f": {msg.topic} -> {msg.payload.decode()}")
         
         message = dict(json.loads(msg.payload.decode()))
         if message.get("request") is None: 
@@ -73,33 +112,22 @@ class AWSIoTClient:
         if request == "file-transfer":
             data = message["data"]
             
-            datatype = data["type"] # 'data' or 'recipe'
-            dataname = data["name"]
-            #datacontent = base64.b64decode(file["content"])
-            datacontent = data["content"]
+            presigned_url = self.get_presigned_url(method="get_object",key=data["content"])
             
-            with open(self.request_file, 'r', encoding='utf-8') as file:
-                requestlist_dic = json.load(file)
-                
-            requestlist_dic["request-list"].append({"type": "file-transfer", "data": {"type": datatype, "name": dataname, "content": datacontent}})
+            if presigned_url is not None:
+                content = self.get_file_from_presigned_url(presigned_url=presigned_url)
+
+                if content is not None:
+                    with open(self.request_file, 'r', encoding='utf-8') as file:
+                        requestlist_dic = json.load(file)
+                        
+                    requestlist_dic["request-list"].append({"type": "file-transfer","data": content})
+                    
+                    with open(self.request_file, 'w', encoding='utf-8') as file:
+                        json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
+            else:
+                return
             
-            with open(self.request_file, 'w', encoding='utf-8') as file:
-                json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
-                
-            # file_path = ""
-            # if datatype == "data":
-            #     os.makedirs(self.device_dir, exist_ok=True)
-            #     file_path = os.path.join(self.device_dir, dataname)
-            # elif datatype == "recipe":
-            #     os.makedirs(self.recipe_dir, exist_ok=True)
-            #     file_path = os.path.join(self.recipe_dir, dataname)
-            # else:
-            #     print("Invalid File Type")
-            #     return 
-            
-            # with open(file_path, "wb") as file:
-            #     file.write(datacontent)
-                
         elif request == "allow-remote-control":
             with open(self.request_file, 'r', encoding='utf-8') as file:
                 requestlist_dic = json.load(file)
@@ -122,27 +150,26 @@ class AWSIoTClient:
             
             with open(self.request_file, 'w', encoding='utf-8') as file:
                 json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
-
-            
+         
     def connect(self):
         # Connect AWS IoT Core
-        print("Try to Connection to", self.endpoint, "/", self.topic, "...")
-        self.client.connect(self.endpoint, 8883, 60)
+        print("Try to Connection to", self.iot_endpoint, "/", self.topic, "...")
+        self.client.connect(self.iot_endpoint, 8883, 60)
         self.client.loop_start()
     
         time.sleep(5)
         
-        print("Connection End - Endpoint: ", self.endpoint, "/ topic", self.topic)
+        print("Connection End - Endpoint: ", self.iot_endpoint, "/ topic", self.topic)
 
     def publish(self, message):
         # Send MQTT message
         payload = json.dumps(message)
         self.client.publish(self.topic, payload)
-        print("Sent Message to ", self.endpoint, "/", self.topic, f": {payload}")
+        print("Sent Message to ", self.iot_endpoint, "/", self.topic, f": {payload}")
 
     def disconnect(self):
         # Disconnect to AWS IoT Core
         self.client.loop_stop()
         self.client.disconnect()
-        print("Disconnection to ", self.endpoint,"/", self.topic, ": Success")
+        print("Disconnection to ", self.iot_endpoint,"/", self.topic, ": Success")
 
