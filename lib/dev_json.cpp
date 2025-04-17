@@ -29,7 +29,7 @@ std::vector<std::string> Dev_JSON::split(const std::string& input, char delimite
 		}
 	}
 
-	if (!temp.empty()) result.push_back(temp); // ¸¶Áö¸· ÅäÅ« Ãß°¡
+	if (!temp.empty()) result.push_back(temp); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å« ï¿½ß°ï¿½
 	return result;
 }
 
@@ -81,7 +81,7 @@ bool Dev_JSON::set_sensor_status(double temp, double pres, double leve, double e
 		sstatus["temperture"] = temp;
 		sstatus["pressure"] = pres;
 		sstatus["waterlevel"] = leve;
-		sstatus["engine"] = { {"left", engl}, {"right", engr} };
+		sstatus["engineled"] = { {"left", engl}, {"right", engr} };
 
 		this->sensor_status = sstatus;
 	}
@@ -98,7 +98,7 @@ bool Dev_JSON::set_sensor_status(double temp, double pres, double leve, double e
 		sstatus["temperture"] = temp;
 		sstatus["pressure"] = pres;
 		sstatus["waterlevel"] = leve;
-		sstatus["engine"] = { {"left", engo} };
+		sstatus["engineled"] = { {"left", engo} };
 
 		this->sensor_status = sstatus;
 	}
