@@ -1,0 +1,3 @@
+C:\Users\carima1301\source\repos\PythonImportTest\PythonImportTest\x64\Release\PythonImportTest.vcxproj.AssemblyReference.cache
+C:\Users\carima1301\source\repos\PythonImportTest\PythonImportTest\x64\Release\PythonImportTest.MyForm.resources
+C:\Users\carima1301\source\repos\PythonImportTest\PythonImportTest\x64\Release\PythonImportTest.vcxproj.GenerateResource.cache

@@ -1,0 +1,151 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\MyForm.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}|Form",
+      "RelativeMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|solutionrelative:PythonImportTest\\MyForm.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\MyForm.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|solutionrelative:PythonImportTest\\MyForm.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\dev_json.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|solutionrelative:PythonImportTest\\dev_json.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\pr_state.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|solutionrelative:PythonImportTest\\pr_state.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\pr_state.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|solutionrelative:PythonImportTest\\pr_state.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\dev_json.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|solutionrelative:PythonImportTest\\dev_json.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\MyForm.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{1EDCC8F3-9058-9876-267C-83C32D993EE1}|PythonImportTest\\PythonImportTest.vcxproj|solutionrelative:PythonImportTest\\MyForm.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "dev_json.cpp",
+              "DocumentMoniker": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\dev_json.cpp",
+              "RelativeDocumentMoniker": "PythonImportTest\\dev_json.cpp",
+              "ToolTip": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\dev_json.cpp",
+              "RelativeToolTip": "PythonImportTest\\dev_json.cpp",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAAAFMAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-15T00:41:08.77Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "pr_state.cpp",
+              "DocumentMoniker": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\pr_state.cpp",
+              "RelativeDocumentMoniker": "PythonImportTest\\pr_state.cpp",
+              "ToolTip": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\pr_state.cpp",
+              "RelativeToolTip": "PythonImportTest\\pr_state.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-15T05:40:01.778Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "pr_state.h",
+              "DocumentMoniker": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\pr_state.h",
+              "RelativeDocumentMoniker": "PythonImportTest\\pr_state.h",
+              "ToolTip": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\pr_state.h",
+              "RelativeToolTip": "PythonImportTest\\pr_state.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvw4AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-15T05:37:54.158Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "dev_json.h",
+              "DocumentMoniker": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\dev_json.h",
+              "RelativeDocumentMoniker": "PythonImportTest\\dev_json.h",
+              "ToolTip": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\dev_json.h",
+              "RelativeToolTip": "PythonImportTest\\dev_json.h",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAEkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-15T00:18:27.808Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MyForm.h [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\MyForm.h",
+              "RelativeDocumentMoniker": "PythonImportTest\\MyForm.h",
+              "ToolTip": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\MyForm.h [\uB514\uC790\uC778]",
+              "RelativeToolTip": "PythonImportTest\\MyForm.h [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-15T04:05:21.914Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MyForm.h",
+              "DocumentMoniker": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\MyForm.h",
+              "RelativeDocumentMoniker": "PythonImportTest\\MyForm.h",
+              "ToolTip": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\MyForm.h",
+              "RelativeToolTip": "PythonImportTest\\MyForm.h",
+              "ViewState": "AgIAAJsCAAAAAAAAAAAAwM4DAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-04T01:30:54.337Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MyForm.cpp",
+              "DocumentMoniker": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\MyForm.cpp",
+              "RelativeDocumentMoniker": "PythonImportTest\\MyForm.cpp",
+              "ToolTip": "C:\\Users\\carima1301\\source\\repos\\PythonImportTest\\PythonImportTest\\MyForm.cpp",
+              "RelativeToolTip": "PythonImportTest\\MyForm.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-04T01:11:32.924Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
