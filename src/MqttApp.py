@@ -73,7 +73,7 @@ if __name__ == "__main__":
     
     APIG_END_POINT = config_content["APIGateway"]["end_point"]
     
-    mqtt_client = MqttToIoTCore.AWSIoTClient(IOT_END_POINT, CLIENT_ID, TOPIC, CA_CERT, CERT_FILE, PRIVATE_KEY, DATA_DIR, RECIPE_DIR, REQUEST_FILE,APIG_END_POINT)
+    mqtt_client = MqttToIoTCore.AWSIoTClient(IOT_END_POINT, CLIENT_ID, TOPIC, CA_CERT, CERT_FILE, PRIVATE_KEY, DATA_DIR, RECIPE_DIR, REQUEST_FILE,   APIG_END_POINT)
     
     mqtt_client.connect()
     
@@ -113,10 +113,13 @@ if __name__ == "__main__":
                 print_recipe = get_print_recipe()
                 mqtt_client.publish({"target": "storage","action": "print-recipe","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": print_recipe}})
                 
-            if device_auth != get_device_auth():
-                device_auth = get_device_auth()
-                mqtt_client.publish({"target": "storage","action": "device-auth","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": device_auth}})
-                
+            if device_alarm != get_device_alarm():
+                device_alarm = get_device_alarm()
+                mqtt_client.publish({"target": "storage","action": "device-alarm","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": device_alarm}})    
+                device_alarm["alarm-list"].clear()
+                with open("./static/alarm.json", 'w', encoding='utf-8') as file:
+                    json.dump(device_alarm, file, indent=4, ensure_ascii=False)
+                     
             time.sleep(1); timer += 1
         except KeyboardInterrupt:
             mqtt_client.disconnect()
