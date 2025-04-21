@@ -1,4 +1,7 @@
 {
+    "APIGateway":{
+        "end_point": "https://2mzb54ffpb.execute-api.ap-northeast-2.amazonaws.com/devcontrol/"
+    },
     "IoTCore":{
         "end_point": "a3nz0danj2sqa0-ats.iot.ap-northeast-2.amazonaws.com",
         "client_id": "MQTT_to_X1-2_Client",
