@@ -47,7 +47,7 @@ def init_storage(mqtt_client, device_type, device_id, device_auth, sensor_status
     mqtt_client.publish({"target": "storage","action": "device-status","device":{"type": device_type,"id": device_id},"data":{"content": device_status}})
     mqtt_client.publish({"target": "storage","action": "print-data","device":{"type": device_type,"id": device_id},"data":{"content": print_data}})
     mqtt_client.publish({"target": "storage","action": "print-recipe","device":{"type": device_type,"id": device_id},"data":{"content": print_recipe}})
-    mqtt_client.publish({"target": "storage","action": "device-alarm","device":{"type": device_type,"id": device_id},"data":{"content": device_alarm}})
+    #mqtt_client.publish({"target": "storage","action": "device-alarm","device":{"type": device_type,"id": device_id},"data":{"content": device_alarm}})
     
 if __name__ == "__main__":
     config_content = get_config_info()
