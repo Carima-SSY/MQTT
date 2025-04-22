@@ -36,17 +36,26 @@ def get_device_auth():
         auth_content = json.load(file) 
     return auth_content 
 
-def get_device_alarm():
+def get_device_alarm():  
     with open('./static/alarm.json', 'r', encoding='utf-8') as file:
         alarm_content = json.load(file) 
     return alarm_content 
 
 def init_storage(mqtt_client, device_type, device_id, device_auth, sensor_status, device_status, print_data, print_recipe, device_alarm):
     #mqtt_client.publish({"target": "storage","action": "device-auth","device":{"type": device_type,"id": device_id},"data":{"content": device_auth}})
+    
     mqtt_client.publish({"target": "storage","action": "sensor-status","device":{"type": device_type,"id": device_id},"data":{"content": sensor_status}})
+    
     mqtt_client.publish({"target": "storage","action": "device-status","device":{"type": device_type,"id": device_id},"data":{"content": device_status}})
-    mqtt_client.publish({"target": "storage","action": "print-data","device":{"type": device_type,"id": device_id},"data":{"content": print_data}})
-    mqtt_client.publish({"target": "storage","action": "print-recipe","device":{"type": device_type,"id": device_id},"data":{"content": print_recipe}})
+    
+    #mqtt_client.publish({"target": "storage","action": "print-data","device":{"type": device_type,"id": device_id},"data":{"content": print_data}})
+    url = mqtt_client.get_presigned_url(method="put_object", key=DEV_TYPE+"/"+DEV_ID+"/pdata.json")
+    mqtt_client.put_file_to_presigned_url(presigned_url=url, json_data=print_data)
+    
+    #mqtt_client.publish({"target": "storage","action": "print-recipe","device":{"type": device_type,"id": device_id},"data":{"content": print_recipe}})
+    url = mqtt_client.get_presigned_url(method="put_object", key=DEV_TYPE+"/"+DEV_ID+"/precipe.json")
+    mqtt_client.put_file_to_presigned_url(presigned_url=url, json_data=print_data)
+
     mqtt_client.publish({"target": "storage","action": "device-alarm","device":{"type": device_type,"id": device_id},"data":{"content": device_alarm}})
     
 if __name__ == "__main__":
