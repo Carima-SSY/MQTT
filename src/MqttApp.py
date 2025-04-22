@@ -120,7 +120,9 @@ if __name__ == "__main__":
             
             if print_recipe != get_print_recipe():
                 print_recipe = get_print_recipe()
-                mqtt_client.publish({"target": "storage","action": "print-recipe","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": print_recipe}})
+                url = mqtt_client.get_presigned_url(method="put_object", key=DEV_TYPE+"/"+DEV_ID+"/precipe.json")
+                mqtt_client.put_file_to_presigned_url(presigned_url=url, json_data=print_recipe)
+                #mqtt_client.publish({"target": "storage","action": "print-recipe","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": print_recipe}})
                 
             if device_alarm != get_device_alarm():
                 device_alarm = get_device_alarm()
