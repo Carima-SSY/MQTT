@@ -1,139 +1,177 @@
-import MqttToIoTCore
+import paho.mqtt.client as mqtt
+import ssl
 import time
-import random
 import json
-# ================================
-# Application Code (MQTT ~ IoT Core)
-# ================================
+import os
+import base64
+import requests
 
-def get_config_info():
-    with open('./static/config.json', 'r', encoding='utf-8') as file:
-        config_content = json.load(file) 
-    return config_content 
+class AWSIoTClient:
 
-def get_print_data():
-    with open('./static/pdata.json', 'r', encoding='utf-8') as file:
-        pdata_content = json.load(file) 
-    return pdata_content 
-
-def get_print_recipe():
-    with open('./static/precipe.json', 'r', encoding='utf-8') as file:
-        precipe_content = json.load(file) 
-    return precipe_content 
-
-def get_sensor_status():
-    with open('./static/sensor.json', 'r', encoding='utf-8') as file:
-        sstatus_content = json.load(file) 
-    return sstatus_content 
-
-def get_device_status():
-    with open('./static/dstatus.json', 'r', encoding='utf-8') as file:
-        dstatus_content = json.load(file) 
-    return dstatus_content 
-
-def get_device_auth():
-    with open('./static/auth.json', 'r', encoding='utf-8') as file:
-        auth_content = json.load(file) 
-    return auth_content 
-
-def get_device_alarm():  
-    with open('./static/alarm.json', 'r', encoding='utf-8') as file:
-        alarm_content = json.load(file) 
-    return alarm_content 
-
-def init_storage(mqtt_client, device_type, device_id, device_auth, sensor_status, device_status, print_data, print_recipe, device_alarm):
-    #mqtt_client.publish({"target": "storage","action": "device-auth","device":{"type": device_type,"id": device_id},"data":{"content": device_auth}})
-    
-    mqtt_client.publish({"target": "storage","action": "sensor-status","device":{"type": device_type,"id": device_id},"data":{"content": sensor_status}})
-    
-    mqtt_client.publish({"target": "storage","action": "device-status","device":{"type": device_type,"id": device_id},"data":{"content": device_status}})
-    
-    #mqtt_client.publish({"target": "storage","action": "print-data","device":{"type": device_type,"id": device_id},"data":{"content": print_data}})
-    url = mqtt_client.get_presigned_url(method="put_object", key=DEV_TYPE+"/"+DEV_ID+"/pdata.json")
-    mqtt_client.put_file_to_presigned_url(presigned_url=url, json_data=print_data)
-    
-    #mqtt_client.publish({"target": "storage","action": "print-recipe","device":{"type": device_type,"id": device_id},"data":{"content": print_recipe}})
-    url = mqtt_client.get_presigned_url(method="put_object", key=DEV_TYPE+"/"+DEV_ID+"/precipe.json")
-    mqtt_client.put_file_to_presigned_url(presigned_url=url, json_data=print_data)
-
-    mqtt_client.publish({"target": "storage","action": "device-alarm","device":{"type": device_type,"id": device_id},"data":{"content": device_alarm}})
-    
-if __name__ == "__main__":
-    config_content = get_config_info()
-    
-    IOT_END_POINT = config_content["IoTCore"]["end_point"]
-    CLIENT_ID = config_content["IoTCore"]["client_id"]
+    def __init__(self, iot_endpoint, client_id, topic, ca_cert, cert_file, private_key, device_dir, recipe_dir, request_file, api_endpoint):
+        """
+        AWS IoT Core MQTT 클라이언트 초기화
+        :param endpoint: AWS IoT Core Endpoint
+        :param client_id: AWS Client ID (Custom)
+        :param topic: MQTT Topic
+        :param ca_cert: CA Certificate Directory Address 
+        :param cert_file: Cert File Directory Address
+        :param private_key: Private Key Directory Address
+        """
+        print("Create MQTT Client...")
         
-    CA_CERT = config_content["IoTCore"]["ca_cert"]
-    CERT_FILE = config_content["IoTCore"]["cert_file"]
-    PRIVATE_KEY = config_content["IoTCore"]["private_key"]
-    
-    DEV_TYPE = config_content["device"]["type"]
-    DEV_ID = config_content["device"]["id"]
-    
-    TOPIC = DEV_TYPE+"/"+DEV_ID
-    
-    DATA_DIR = config_content["dir"]["data"]
-    RECIPE_DIR = config_content["dir"]["recipe"]
-    
-    REQUEST_FILE = config_content["request_file"]
-    
-    APP_VERSION = config_content["App-Version"]
-    
-    APIG_END_POINT = config_content["APIGateway"]["end_point"]
-    
-    mqtt_client = MqttToIoTCore.AWSIoTClient(IOT_END_POINT, CLIENT_ID, TOPIC, CA_CERT, CERT_FILE, PRIVATE_KEY, DATA_DIR, RECIPE_DIR, REQUEST_FILE,   APIG_END_POINT)
-    
-    mqtt_client.connect()
-    
-    time.sleep(5)
-    
-    sensor_status = get_sensor_status()
-    device_status = get_device_status()
-    
-    print_data = get_print_data()
-    print_recipe = get_print_recipe()
-    
-    device_auth = get_device_auth()
-    device_alarm = get_device_alarm()
-    
-    init_storage(mqtt_client=mqtt_client, device_type=DEV_TYPE, device_id=DEV_ID, device_auth=device_auth, sensor_status=sensor_status, device_status=device_status, print_data=print_data, print_recipe=print_recipe, device_alarm=device_alarm)
-    
-    timer=0
-    while True:
-        try:
-            if timer > 60:
-                if sensor_status != get_sensor_status():
-                    sensor_status = get_sensor_status()
-                    mqtt_client.publish({"target": "storage","action": "sensor-status","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": sensor_status}})
-                timer=0
+        self.iot_endpoint = iot_endpoint
+        self.client_id = client_id
+        self.topic = topic
+        self.ca_cert = ca_cert
+        self.cert_file = cert_file
+        self.private_key = private_key
+        self.device_dir = device_dir
+        self.recipe_dir = recipe_dir
+        self.request_file = request_file
+        self.api_endpoint = api_endpoint
+        
+        print("IoT Core Endpoint: ", self.iot_endpoint)
+        print("Client ID: ", self.client_id)
+        print("Topic: ", self.topic)
+        print("CA Cert: ", self.ca_cert)
+        print("Cert File: ", self.cert_file)
+        print("Private Key: ", self.private_key)
+        print("Device Data Directory: ", self.device_dir)
+        print("Device Recipe Directory: ", self.recipe_dir)
+        print("Device Request File: ", self.request_file)
+        print("API Gateway Endpoint: ", self.api_endpoint)
+        
+        self.client = mqtt.Client(client_id=self.client_id)
+        print("Create MQTT Client Successfully!!")
+        
+        # TLS 설정
+        self.client.tls_set(ca_certs=self.ca_cert,
+                            certfile=self.cert_file,
+                            keyfile=self.private_key,
+                            tls_version=ssl.PROTOCOL_TLSv1_2)
+        print("Set TLS (CA Cert / Cert File / Private Key / TLS Version) Successfully!!")
+        
+        # 콜백 함수 설정
+        self.client.on_connect = self.on_connect
+        self.client.on_message = self.on_message
+
+    def on_connect(self, client, userdata, flags, rc):
+        # Call when connected to AWS IoT Core
+        if rc == 0:
+            print("Connection to ", self.iot_endpoint,"/", self.topic, ": Success")
+            self.client.subscribe(self.topic)
+        else:
+            print("Connection to ", self.iot_endpoint,"/", self.topic, f": Failure (RC: {rc})")
+
+    def get_presigned_url(self, method, key):
+        # key example = 'X1/1/files/test.slice'
+        
+        key_ls = ((str)(key)).split('/')
+        
+        devtype = key_ls[0]; devid = key_ls[1]
+        if len(key_ls) > 3: data_name = key_ls[2]+"/"+key_ls[3]
+        else: data_name = key_ls[2]
+        
+        response = requests.post(self.api_endpoint, 
+            json={
+                "action": "get_presigned_url", 
+                "device":{
+                    "type": devtype, 
+                    "id": devid
+                }, 
+                "data":{
+                    "name": data_name, 
+                    "method": method
+                }
+            }
+        )
+        if response.status_code == 200: return response.json()
+        else: return None
+        
+    def get_file_from_presigned_url(self, presigned_url):
+        response = requests.get(presigned_url)
+        if response.status_code == 200: return response.json()
+        else: return None
+        
+    def put_file_to_presigned_url(self, presigned_url, json_data):
+        response = requests.put(url=presigned_url,json=json_data)
+        if response.status_code == 200: return True
+        else: return False
+        
+    def on_message(self, client, userdata, msg):
+        # Call when receiving MQTT message
+        print("Message from ", self.iot_endpoint, f": {msg.topic} -> {msg.payload.decode()}")
+        
+        message = dict(json.loads(msg.payload.decode()))
+        if message.get("request") is None: 
+            return
+        
+        request = message["request"]
+        
+        if request == "file-transfer":
+            data = message["data"]
             
-            if device_status != get_device_status():
-                device_status = get_device_status()
-                mqtt_client.publish({"target": "storage","action": "device-status","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": device_status}})
+            presigned_url = self.get_presigned_url(method="get_object",key=data["content"])
+            if presigned_url is not None:
+                content = self.get_file_from_presigned_url(presigned_url=presigned_url)
                 
-            if print_data != get_print_data():
-                print_data = get_print_data()
-                url = mqtt_client.get_presigned_url(method="put_object", key=DEV_TYPE+"/"+DEV_ID+"/pdata.json")
-                mqtt_client.put_file_to_presigned_url(presigned_url=url, json_data=print_data)
-                #mqtt_client.publish({"target": "storage","action": "print-data","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": print_data}})
+                if content is not None:
+                    
+                    output_file_path = ""
+                    
+                    if content["type"] == "data":
+                        output_file_path = self.device_dir+"/"+content["name"]
+                    elif content["type"] == "recipe":
+                        output_file_path = self.recipe_dir+"/"+content["name"]
+
+                    decoded_bytes = base64.b64decode(content["content"])
+
+                    with open(output_file_path, 'wb') as f: f.write(decoded_bytes)
+            else:
+                return
             
-            if print_recipe != get_print_recipe():
-                print_recipe = get_print_recipe()
-                url = mqtt_client.get_presigned_url(method="put_object", key=DEV_TYPE+"/"+DEV_ID+"/precipe.json")
-                mqtt_client.put_file_to_presigned_url(presigned_url=url, json_data=print_recipe)
-                #mqtt_client.publish({"target": "storage","action": "print-recipe","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": print_recipe}})
+        elif request == "allow-remote-control":
+            with open(self.request_file, 'r', encoding='utf-8') as file:
+                requestlist_dic = json.load(file)
                 
-            if device_alarm != get_device_alarm():
-                device_alarm = get_device_alarm()
-                mqtt_client.publish({"target": "storage","action": "device-alarm","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": device_alarm}})    
-                device_alarm["alarm-list"].clear()
-                with open("./static/alarm.json", 'w', encoding='utf-8') as file:
-                    json.dump(device_alarm, file, indent=4, ensure_ascii=False)
-                     
-            time.sleep(1); timer += 1
-        except KeyboardInterrupt:
-            mqtt_client.disconnect()
-            print("Program Exit")
-            break
+            requestlist_dic["request-list"].append({"type": "allow-remote-control"})
+            
+            with open(self.request_file, 'w', encoding='utf-8') as file:
+                json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
+                
+        elif request == "print-start":
+            data = message["data"]
+            
+            pdata = data["data"]
+            pecipe = data["recipe"]
+            
+            with open(self.request_file, 'r', encoding='utf-8') as file:
+                requestlist_dic = json.load(file)
+                
+            requestlist_dic["request-list"].append({"type": "print-start", "data": pdata, "recipe": pecipe})
+            
+            with open(self.request_file, 'w', encoding='utf-8') as file:
+                json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
+         
+    def connect(self):
+        # Connect AWS IoT Core
+        print("Try to Connection to", self.iot_endpoint, "/", self.topic, "...")
+        self.client.connect(self.iot_endpoint, 8883, 60)
+        self.client.loop_start()
     
+        time.sleep(5)
+        
+        print("Connection End - Endpoint: ", self.iot_endpoint, "/ topic", self.topic)
+
+    def publish(self, message):
+        # Send MQTT message
+        payload = json.dumps(message)
+        self.client.publish(self.topic, payload)
+        print("Sent Message to ", self.iot_endpoint, "/", self.topic, f": {payload}")
+
+    def disconnect(self):
+        # Disconnect to AWS IoT Core
+        self.client.loop_stop()
+        self.client.disconnect()
+        print("Disconnection to ", self.iot_endpoint,"/", self.topic, ": Success")
