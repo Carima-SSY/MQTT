@@ -2,37 +2,48 @@ import MqttToIoTCore
 import time
 import random
 import json
+import sys
+import os
 # ================================
 # Application Code (MQTT ~ IoT Core)
 # ================================
+def get_resource_path(relative_path):
+    if getattr(sys, 'frozen', False):
+        # PyInstaller EXE
+        base_path = os.path.dirname(sys.executable)
+    else:
+        # DEVELOP
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 def get_config_info():
-    with open('./static/config.json', 'r', encoding='utf-8') as file:
+    with open(get_resource_path('static/config.json'), 'r', encoding='utf-8') as file:
         config_content = json.load(file) 
     return config_content 
 
 def get_print_data():
-    with open('./static/pdata.json', 'r', encoding='utf-8') as file:
+    with open(get_resource_path('static/pdata.json'), 'r', encoding='utf-8') as file:
         pdata_content = json.load(file) 
     return pdata_content 
 
 def get_print_recipe():
-    with open('./static/precipe.json', 'r', encoding='utf-8') as file:
+    with open(get_resource_path('/static/precipe.json'), 'r', encoding='utf-8') as file:
         precipe_content = json.load(file) 
     return precipe_content 
 
 def get_sensor_status():
-    with open('./static/sensor.json', 'r', encoding='utf-8') as file:
+    with open(get_resource_path('/static/sensor.json'), 'r', encoding='utf-8') as file:
         sstatus_content = json.load(file) 
     return sstatus_content 
 
 def get_device_status():
-    with open('./static/dstatus.json', 'r', encoding='utf-8') as file:
+    with open(get_resource_path('/static/dstatus.json'), 'r', encoding='utf-8') as file:
         dstatus_content = json.load(file) 
     return dstatus_content 
 
 def get_device_alarm():  
-    with open('./static/alarm.json', 'r', encoding='utf-8') as file:
+    with open(get_resource_path('/static/alarm.json'), 'r', encoding='utf-8') as file:
         alarm_content = json.load(file) 
     return alarm_content 
 
