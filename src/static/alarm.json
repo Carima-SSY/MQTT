@@ -1,44 +1,5 @@
 {
-    "alarm-list":[
-	    {
-		    "subject": "Printing Denied",
-		    "content": "Printing is Denied / Data: invaliddata.slice / Recipe: testrecipe.xml / Invalid Data",
-		    "created_date": "2025:04:25:15:03:56"
-	    },
-	    {
-		    "subject": "Printing Denied",
-		    "content": "Printing is Denied / Data: test.slice / Recipe: invalidrecipe.xml / Invalid Recipe",
-		    "created_date": "2025:04:25:16:55:03"
-	    },
-	    {
-		    "subject": "Printing Denied",
-		    "content": "Printing is Denied / Data: unmatcheddata.slice / Recipe: unmatcheddata.xml / Unmatched Data and Recipe",
-		    "created_date": "2025:04:25:17:37:41"
-	    },
-	    {
-		    "subject": "Printing Denied",
-		    "content": "Printing is Denied / Data: test.slice / Recipe: testrecipe.xml / Disconnected Sensor",
-		    "created_date": "2025:04:25:18:12:07"
-	    },
-	    {
-		    "subject": "Printing Denied",
-		    "content": "Printing is Denied / Data: test.slice / Recipe: testrecipe.xml / Heating Deactivated",
-		    "created_date": "2025:04:25:19:23:49"
-	    },
-	    {
-		    "subject": "Printing Start",
-		    "content": "Printing Started / Data: test.slice / Recipe: testrecipe.xml",
-		    "created_date": "2025:04:25:20:30:21"
-	    },
-	    {
-		    "subject": "Printing Finish",
-		    "content": "Printing Finished / Data: test.slice / Recipe: testrecipe.xml",
-		    "created_date": "2025:04:25:22:19:56"
-	    },
-	    {
-		    "subject": "Printing Abort",
-		    "content": "Printing Aborted / Data: test.slice / Recipe: testrecipe.xml",
-		    "created_date": "2025:04:25:22:19:56"
-	    }
-    ]
+    "subject": "Printing Denied",
+    "content": "Printing is Denied / Data: invaliddata.slice / Recipe: testrecipe.xml / Invalid Data",
+    "created_date": "2025:04:25:15:03:56"
 }
