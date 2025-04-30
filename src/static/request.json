@@ -2,10 +2,8 @@
     "request-list":[
         {
             "type": "print-start",
-            "printing":{
-                "data": "sample.slice",
-                "recipe": "samplerecipe.xml"
-            }
+            "data": "sample.slice",
+            "recipe": "samplerecipe.xml"
         }
     ]
 }

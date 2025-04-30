@@ -113,18 +113,25 @@ class AWSIoTClient:
             data = message["data"]
             
             presigned_url = self.get_presigned_url(method="get_object",key=data["content"])
-            
+            #print("File transfer PRE-URL: ", presigned_url)
             if presigned_url is not None:
                 content = self.get_file_from_presigned_url(presigned_url=presigned_url)
-
+                #print("File Content:", content)
                 if content is not None:
-                    with open(self.request_file, 'r', encoding='utf-8') as file:
-                        requestlist_dic = json.load(file)
-                        
-                    requestlist_dic["request-list"].append({"type": "file-transfer","data": content})
-                    
-                    with open(self.request_file, 'w', encoding='utf-8') as file:
-                        json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
+
+                    # Setting Directory
+                    output_file_path = ""
+                    if content["type"] == "data":
+                        output_file_path = self.device_dir+"/"+content["name"]
+                    elif content["type"] == "recipe":
+                        output_file_path = self.recipe_dir+"/"+content["name"]
+
+                    # base64 디코딩
+                    decoded_bytes = base64.b64decode(content["content"])
+
+                    # 파일로 저장
+                    with open(output_file_path, 'wb') as f:
+                        f.write(decoded_bytes)
             else:
                 return
             
@@ -172,4 +179,4 @@ class AWSIoTClient:
         self.client.loop_stop()
         self.client.disconnect()
         print("Disconnection to ", self.iot_endpoint,"/", self.topic, ": Success")
-
+        

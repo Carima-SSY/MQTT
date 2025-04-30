@@ -17,6 +17,5 @@
         "data": "/Users/carima/Documents/Programming/DMS_FileProcess/DMS/ToIoTCore/version2/directory/data",
         "recipe": "/Users/carima/Documents/Programming/DMS_FileProcess/DMS/ToIoTCore/version2/directory/recipe"
     },
-    "request_file":"/Users/carima/Documents/Programming/DMS_FileProcess/DMS/ToIoTCore/version2/static/request.json",
-    "App-Version": "v2.11.4"
+    "request_file":"/Users/carima/Documents/Programming/DMS_FileProcess/DMS/ToIoTCore/version2/static/request.json"
 }     
