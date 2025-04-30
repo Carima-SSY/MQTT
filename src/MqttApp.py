@@ -71,11 +71,9 @@ if __name__ == "__main__":
     
     REQUEST_FILE = config_content["request_file"]
     
-    APP_VERSION = config_content["App-Version"]
-    
     APIG_END_POINT = config_content["APIGateway"]["end_point"]
     
-    mqtt_client = MqttToIoTCore.AWSIoTClient(IOT_END_POINT, CLIENT_ID, TOPIC, CA_CERT, CERT_FILE, PRIVATE_KEY, DATA_DIR, RECIPE_DIR, REQUEST_FILE,   APIG_END_POINT)
+    mqtt_client = MqttToIoTCore.AWSIoTClient(IOT_END_POINT, CLIENT_ID, TOPIC, CA_CERT, CERT_FILE, PRIVATE_KEY, DATA_DIR, RECIPE_DIR, REQUEST_FILE, APIG_END_POINT)
     
     mqtt_client.connect()
     
