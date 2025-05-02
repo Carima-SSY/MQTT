@@ -14,8 +14,8 @@
         "id": "2"
     },
     "dir":{
-        "data": "/Users/carima/Documents/Programming/DMS_FileProcess/DMS/ToIoTCore/version2/directory/data",
-        "recipe": "/Users/carima/Documents/Programming/DMS_FileProcess/DMS/ToIoTCore/version2/directory/recipe"
+        "data": "/Users/carima/Documents/TestDir/Datas",
+        "recipe": "/Users/carima/Documents/TestDir/Recipes"
     },
-    "request_file":"/Users/carima/Documents/Programming/DMS_FileProcess/DMS/ToIoTCore/version2/static/request.json"
+    "request_file":"/Users/carima/Documents/Programming/GitConn/MQTT/src/static/request.json"
 }     

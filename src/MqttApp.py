@@ -28,22 +28,22 @@ def get_print_data():
     return pdata_content 
 
 def get_print_recipe():
-    with open(get_resource_path('/static/precipe.json'), 'r', encoding='utf-8') as file:
+    with open(get_resource_path('static/precipe.json'), 'r', encoding='utf-8') as file:
         precipe_content = json.load(file) 
     return precipe_content 
 
 def get_sensor_status():
-    with open(get_resource_path('/static/sensor.json'), 'r', encoding='utf-8') as file:
+    with open(get_resource_path('static/sensor.json'), 'r', encoding='utf-8') as file:
         sstatus_content = json.load(file) 
     return sstatus_content 
 
 def get_device_status():
-    with open(get_resource_path('/static/dstatus.json'), 'r', encoding='utf-8') as file:
+    with open(get_resource_path('static/dstatus.json'), 'r', encoding='utf-8') as file:
         dstatus_content = json.load(file) 
     return dstatus_content 
 
 def get_device_alarm():  
-    with open(get_resource_path('/static/alarm.json'), 'r', encoding='utf-8') as file:
+    with open(get_resource_path('static/alarm.json'), 'r', encoding='utf-8') as file:
         alarm_content = json.load(file) 
     return alarm_content 
 
