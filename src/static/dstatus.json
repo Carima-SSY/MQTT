@@ -1,17 +1,17 @@
 {
-    "allow-remote-control": 1,
+    "allow-remote-control": 0,
     "status": "IDLE", 
     "selected":{
-        "data":"sampletest.slice",
-        "recipe": "testrecipe.xml"
+        "data":"-",
+        "recipe": "-"
     },
     "printing":{
-        "data": "sampletest.slice",
-        "recipe": "testrecipe.xml",
-        "current-layer": 1,
-        "total-layer": 166,
-        "remaining-time": 4654,
-        "printing-progress": 12
+        "data": "-",
+        "recipe": "-",
+        "current-layer": 0,
+        "total-layer": 0,
+        "remaining-time": 0,
+        "printing-progress": 0
     },
     "app-version": "v2.11.4"
 }

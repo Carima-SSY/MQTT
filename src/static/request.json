@@ -1,9 +1,4 @@
 {   
     "request-list":[
-        {
-            "type": "print-start",
-            "data": "sample.slice",
-            "recipe": "samplerecipe.xml"
-        }
     ]
 }

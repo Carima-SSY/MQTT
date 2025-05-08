@@ -1,18 +1,3 @@
 {
-    "TestRecipe.xml":{
-        "content":"g4asr5gas1g2ds1g21adfh42fda1h2fad12had1",
-        "size": "5424"
-    },
-    "NormalTest.xml":{
-        "content":"g4asr5gas1g2ds1g21adfh42fda1h2fad12had1",
-        "size": "7457"
-    },
-    "ContinuousTest.xml":{
-        "content":"g4asr5gas1g2ds1g21adfh42fda1h2fad12had1",
-        "size": "9375"
-    },
-    "IntegrationTest.xml":{
-        "content":"g4asr5gas1g2ds1g21adfh42fda1h2fad12had1",
-        "size": "7836"
-    }
+
 }
