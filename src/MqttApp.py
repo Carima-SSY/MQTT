@@ -109,10 +109,11 @@ if __name__ == "__main__":
                     mqtt_client.publish({"target": "storage","action": "sensor-status","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": sensor_status}})
                 timer=0
             
-            if device_status != get_device_status():
-                device_status = get_device_status()
-                mqtt_client.publish({"target": "storage","action": "device-status","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": device_status}})
-                
+            if timer > 0 and timer%10 == 0:
+                if device_status != get_device_status():
+                    device_status = get_device_status()
+                    mqtt_client.publish({"target": "storage","action": "device-status","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": device_status}})
+                    
             if print_data != get_print_data():
                 print_data = get_print_data()
                 url = mqtt_client.get_presigned_url(method="put_object", key=DEV_TYPE+"/"+DEV_ID+"/pdata.json")
