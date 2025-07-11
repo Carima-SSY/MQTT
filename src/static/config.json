@@ -10,8 +10,8 @@
         "private_key":"/Users/carima/Documents/AWS/IoTCore/X1_Things/1b85a09b2d30a7ebd2689563fbffd13c1b523b85f930f753c342a5b7b3fd1b0a-private.pem.key"
     },
     "device":{
-        "type": "X1",
-        "id": "2"
+        "type": "DM400",
+        "id": "4"
     },
     "dir":{
         "data": "/Users/carima/Documents/TestDir/Datas",
