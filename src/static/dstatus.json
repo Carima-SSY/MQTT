@@ -1,6 +1,6 @@
 {
     "allow-remote-control": 0,
-    "status": "IDLE", 
+    "status": "OFFLINE", 
     "selected":{
         "data":[],
         "recipe": "-"
