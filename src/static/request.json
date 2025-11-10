@@ -1,4 +1,16 @@
 {
     "request-list": [
+        {
+            "type": "print-start",
+            "data": [
+                "a.slice",
+                "b.slice",
+                "c.slice"
+            ],
+            "recipe": "TestRecipe.xml"
+        },
+        {
+            "type": "print-abort"
+        }
     ]
 }

@@ -133,8 +133,7 @@ if __name__ == "__main__":
                 mqtt_client.publish({"target": "storage","action": "device-alarm","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": device_alarm}})    
                 # device_alarm["alarm-list"].clear()
                 # with open("./static/alarm.json", 'w', encoding='utf-8') as file:
-                #     json.dump(device_alarm, file, indent=4, ensure_ascii=False)
-                     
+                #     json.dump(device_alarm, file, indent=4, ensure_ascii=False)          
             time.sleep(1); timer += 1
         except KeyboardInterrupt:
             mqtt_client.disconnect()

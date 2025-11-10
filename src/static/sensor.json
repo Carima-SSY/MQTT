@@ -1,9 +1,10 @@
 {
-    "temperature": 35.4,
+    "temperature": 40,
     "waterlevel": 5.7,
     "pressure": -1,
     "engineled":{
-        "left": 26.5,
-        "right": 27.1
+        "left":30,
+        "right":30,
+        "one": 30
     }
 }

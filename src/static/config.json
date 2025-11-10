@@ -4,14 +4,14 @@
     },
     "IoTCore":{
         "end_point": "a3nz0danj2sqa0-ats.iot.ap-northeast-2.amazonaws.com",
-        "client_id": "MQTT_to_X1-2_Client",
+        "client_id": "MQTT_to_IMLtest_Client",
         "ca_cert": "/Users/carima/Documents/AWS/IoTCore/X1_Things/AmazonRootCA1.pem",
         "cert_file": "/Users/carima/Documents/AWS/IoTCore/X1_Things/1b85a09b2d30a7ebd2689563fbffd13c1b523b85f930f753c342a5b7b3fd1b0a-certificate.pem.crt",
         "private_key":"/Users/carima/Documents/AWS/IoTCore/X1_Things/1b85a09b2d30a7ebd2689563fbffd13c1b523b85f930f753c342a5b7b3fd1b0a-private.pem.key"
     },
     "device":{
-        "type": "DM400",
-        "id": "4"
+        "type": "IML",
+        "id": "2100225"
     },
     "dir":{
         "data": "/Users/carima/Documents/TestDir/Datas",
