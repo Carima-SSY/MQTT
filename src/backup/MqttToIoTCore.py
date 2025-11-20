@@ -5,6 +5,9 @@ import json
 import os
 import base64
 import requests
+import zipfile
+import io
+import shutil
 
 class AWSIoTClient:
 
@@ -123,15 +126,31 @@ class AWSIoTClient:
                     output_file_path = ""
                     if content["type"] == "data":
                         output_file_path = self.device_dir+"/"+content["name"]
+                        
+                        # base64 디코딩
+                        decoded_bytes = base64.b64decode(content["content"])
+                        
+                        output_file_path = output_file_path.removesuffix(".zip")
+                        
+                        with zipfile.ZipFile(io.BytesIO(decoded_bytes)) as zip_ref:
+                            zip_ref.extractall(output_file_path)  # 압축 해제할 폴더 지정
+                            
+                        items = os.listdir(output_file_path)
+                        if len(items) == 1 and os.path.isdir(os.path.join(output_file_path, items[0])):
+                            inner_folder = os.path.join(output_file_path, items[0])
+                            
+                            for item in os.listdir(inner_folder):
+                                shutil.move(os.path.join(inner_folder, item), output_file_path)
+                            os.rmdir(inner_folder)
                     elif content["type"] == "recipe":
                         output_file_path = self.recipe_dir+"/"+content["name"]
 
-                    # base64 디코딩
-                    decoded_bytes = base64.b64decode(content["content"])
+                        # base64 디코딩
+                        decoded_bytes = base64.b64decode(content["content"])
 
-                    # 파일로 저장
-                    with open(output_file_path, 'wb') as f:
-                        f.write(decoded_bytes)
+                        #파일로 저장
+                        with open(output_file_path, 'wb') as f:
+                            f.write(decoded_bytes)
             else:
                 return
             
@@ -157,7 +176,16 @@ class AWSIoTClient:
             
             with open(self.request_file, 'w', encoding='utf-8') as file:
                 json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
-         
+                
+        elif request == "print-abort":
+            with open(self.request_file, 'r', encoding='utf-8') as file:
+                requestlist_dic = json.load(file)
+                
+            requestlist_dic["request-list"].append({"type": "print-abort"})
+            
+            with open(self.request_file, 'w', encoding='utf-8') as file:
+                json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
+                
     def connect(self):
         # Connect AWS IoT Core
         print("Try to Connection to", self.iot_endpoint, "/", self.topic, "...")

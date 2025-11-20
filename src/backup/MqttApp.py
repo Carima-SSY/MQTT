@@ -109,10 +109,12 @@ if __name__ == "__main__":
                     mqtt_client.publish({"target": "storage","action": "sensor-status","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": sensor_status}})
                 timer=0
             
-            if timer > 0 and timer%10 == 0:
-                #if device_status != get_device_status():
-                device_status = get_device_status()
-                mqtt_client.publish({"target": "storage","action": "device-status","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": device_status}})
+            #if timer > 0 and timer%10 == 0:
+            if device_status != get_device_status():
+                check_dic = get_device_status()
+                if check_dic["status"] == "OFFLINE" or (timer > 0 and timer%10 == 0): 
+                    device_status = get_device_status()
+                    mqtt_client.publish({"target": "storage","action": "device-status","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": device_status}})
                     
             if print_data != get_print_data():
                 print_data = get_print_data()
@@ -131,8 +133,7 @@ if __name__ == "__main__":
                 mqtt_client.publish({"target": "storage","action": "device-alarm","device":{"type": DEV_TYPE,"id": DEV_ID},"data":{"content": device_alarm}})    
                 # device_alarm["alarm-list"].clear()
                 # with open("./static/alarm.json", 'w', encoding='utf-8') as file:
-                #     json.dump(device_alarm, file, indent=4, ensure_ascii=False)
-                     
+                #     json.dump(device_alarm, file, indent=4, ensure_ascii=False)          
             time.sleep(1); timer += 1
         except KeyboardInterrupt:
             mqtt_client.disconnect()
