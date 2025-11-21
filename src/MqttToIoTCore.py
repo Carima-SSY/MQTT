@@ -157,6 +157,15 @@ class AWSIoTClient:
             
             with open(self.request_file, 'w', encoding='utf-8') as file:
                 json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
+                
+        elif request == "print-abort":
+            with open(self.request_file, 'r', encoding='utf-8') as file:
+                requestlist_dic = json.load(file)
+                
+            requestlist_dic["request-list"].append({"type": "print-abort"})
+            
+            with open(self.request_file, 'w', encoding='utf-8') as file:
+                json.dump(requestlist_dic, file, indent=4, ensure_ascii=False)
          
     def connect(self):
         # Connect AWS IoT Core
